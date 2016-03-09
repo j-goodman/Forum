@@ -1,0 +1,31 @@
+<h2><%= @topic.title %></h2>
+
+  <% @topic.posts.each do |post| %>
+    <%= post.user.username %>:
+    <br>
+    <%= time_since_posted(post) %>
+    <br>
+    <%= post.body %>
+    <% if post.user == current_user %>
+      <%= button_to "Delete Post", post_url(post), method: :delete %>
+    <% end %>
+    <br><br>
+  <% end %>
+
+<% if signed_in? %>
+  <h3>Add post</h3>
+
+  <form action="<%= posts_url %>" method="post">
+    <%= auth_token %>
+
+    <label "Text">
+      <textarea rows="4" col="60" name="post[body]"></textarea>
+    </label>
+
+    <input type="hidden" name="post[topic_id]" value="<%= @topic.id %>">
+
+    <br>
+
+    <input type="submit" value="Submit">
+  </form>
+<% end %>

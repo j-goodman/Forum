@@ -1,0 +1,22 @@
+<h2>Threads</h2>
+
+<% @topics.each do |topic| %>
+
+<ul>
+  <li>
+    <%= link_to topic.title, topic_url(topic) %>
+    ~ started by <%= topic.user.username %>
+    <% unless topic.posts.empty? %>
+      <% sample = topic.posts.first.body %>
+      <% if sample.length > 70; sample = sample[0..80].split[0...-1].join(" ")+"..."; end %>
+      <br><i><%= sample %></i>
+      <!-- if topic.posts > 1  -->
+      <!-- Most recent post by topic.posts.last.user -->
+      <!-- end -->
+    <% end %>
+  </li>
+</ul>
+
+<% end %>
+
+<%= button_to "New Thread", new_topic_url %>
